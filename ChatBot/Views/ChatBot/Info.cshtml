@@ -1,0 +1,9 @@
+@{
+    ViewData["Title"] = "Info";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Results</h1>
+    <p>Mail sent to <strong>@ViewContext.RouteData.Values["email"]</strong> with the following message <strong>@ViewContext.RouteData.Values["message"]</strong>.</p>
+    <p>Created log with with the following entry <strong>@ViewContext.RouteData.Values["message"]</strong>.</p>
+</div>

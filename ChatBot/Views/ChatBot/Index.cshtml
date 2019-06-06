@@ -1,0 +1,69 @@
+@model IEnumerable<ChatBot.Models.ChatBotMessage>
+@{
+    ViewData["Title"] = "Schedule Assignemnt";
+}
+
+<div>
+    <div>
+        <div>
+
+            <div class="msg-group center" id="conversation"  style="overflow-y:scroll; overflow-x:hidden;">
+
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="card-subtitle mb-2 text-muted text-left">Agent</h6>
+                        <p class="card-text float-left">Hi, how may i help you?</p>
+                    </div>
+                </div>
+
+                @foreach (var ChatMsg in Model)
+                {
+                    if (ChatMsg.MsgType == ChatBot.Models.MessageType.UserMessage)
+                    {
+                        <div class="card">
+                            <div class="card-body">
+                                <h6 class="card-subtitle mb-2 text-muted text-right">You</h6>
+                                <p class="card-text float-right">@ChatMsg.ChatMessage</p>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="card">
+                            <div class="card-body">
+                                <h6 class="card-subtitle mb-2 text-muted text-left">Agent</h6>
+                                <p class="card-text float-left">@ChatMsg.ChatMessage</p>
+                            </div>
+                        </div>
+                    }
+                }
+
+            </div>
+            @{
+                <script>
+                    var chatDiv = document.getElementById("conversation");
+                    chatDiv.scrollTop = chatDiv.scrollHeight;
+                    window.scrollTo(0, document.body.scrollHeight);
+                </script>
+            }
+            <form asp-action="GetChatMessage">
+                <div class="input-group">
+                    <input name="userMessage" id="userMessage" type="text" placeholder="Enter your chat here" class="form-control" autocomplete="off">
+                    <span class="input-group-btn">
+                        <a asp-action="ClearBot" class="btn btn-danger" role="button">Clear</a>
+                    </span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.41.0.min.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            var chatInput = document.getElementById("userMessage");
+            chatInput.focus();
+        }
+    </script>
+}
